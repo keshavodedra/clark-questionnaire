@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+
+// colors
+:root {
+    --primary-color: #0339d7;
+    --secondary-color: #01051c;
+    --text-normal-color: #606c84;
+    --success-color: #00b894;
+    --white-color: #fff;
+    --black-color: #000;
+    --input-color: #3e87d469;
+    --required-color: #cc7575;
+    --logo-color: #4b557063;
+}
+
+// fonts
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&family=Roboto:wght@300&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css");
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
+    line-height: normal !important;
+}
+
+.d-flex {
+    display: flex;
+}
+.align-items-center {
+    align-items: center;
+}
+.justify-contnet-center {
+    justify-content: center;
+}
+.justify-contnet-end {
+    justify-content: flex-end;
+}
+.flex-column {
+    flex-direction: column;
+}
+.text-center {
+    text-align: center;
+}
+.text-white {
+    color: var(--white-color);
+}
+
+.h-100vh {
+    height: 100vh;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+}
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+}
+.btn-lg {
+    font-size: 16px !important;
+    padding: 1rem 2rem !important;
+    height: auto !important;
+    border-radius: 0.5rem !important;
+}
