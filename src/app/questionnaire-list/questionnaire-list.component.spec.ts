@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { QuestionnaireListComponent } from './questionnaire-list.component';
 
 describe('QuestionnaireListComponent', () => {
@@ -19,7 +18,4 @@ describe('QuestionnaireListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

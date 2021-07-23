@@ -2,13 +2,13 @@
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-contnet-center text-center text-white h-100vh">
             <h2>
-                Hey there. We’re working on building a new kind of analytics tool. We’d love to get your input to help
-                us make it great
+                {{description}}
             </h2>
             <p>
-                This should take no mored than 5 minutes
+                {{description_note}}
             </p>
-            <a [routerLink]="['/questionnaire-list']" class="waves-effect waves-light btn btn-primary btn-lg">Welcome to Questionnaire!</a>
+            <a [routerLink]="['/questionnaire-list']" class="waves-effect waves-light btn btn-primary btn-lg">Let's get
+                started</a>
         </div>
     </div>
 </section>

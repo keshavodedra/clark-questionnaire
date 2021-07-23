@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionnaireComponent implements OnInit {
 
+  description: string = "Hey there. Interested in our product? Answer a few short questions and we'll get in touch with you!";
+  description_note: string = "This will not take more than 5 minutes";
+
   constructor() { }
 
   ngOnInit(): void {

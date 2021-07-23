@@ -22,4 +22,13 @@ describe('QuestionnaireComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Description should equall', () => {
+    expect(component.description).toBe("Hey there. Interested in our product? Answer a few short questions and we'll get in touch with you!")
+  });
+
+  it('Description Note should equall', () => {
+    expect(component.description_note).toBe("This will not take more than 5 minutes")
+  });
+
 });

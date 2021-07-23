@@ -8,7 +8,7 @@
 
             <div class="q-section" id="{{'question-' + question?.identifier}}"
                 *ngIf="question?.question_type == 'multiple-choice' && showQuestion == question?.identifier">
-                <div class="container">
+                <div class="container" [@inOutAnimation]>
                     <div class="d-flex align-items-center h-100vh">
                         <div>
                             <h3> {{i + 1}}) {{question?.headline}} <span class="req-field"
@@ -36,7 +36,7 @@
 
             <div class="q-section" id="{{'question-' + question.identifier}}"
                 *ngIf="question.question_type == 'text' && showQuestion == question?.identifier">
-                <div class="container">
+                <div class="container" [@inOutAnimation]>
                     <div class="d-flex align-items-center h-100vh">
                         <div>
                             <h3> {{i + 1}}) {{question?.headline}} </h3>
@@ -82,8 +82,8 @@
         <div class="alert">
             <div class="text-center">
                 <i class="zmdi zmdi-check"></i>
-                <h3> Hey Thanks you for fiiling out this form</h3>
-                <a [routerLink]="['/questionnaire']" class="btn waves-effect waves-light btn-primary">Back</a>
+                <h3> Hey There! Thank you for filing out this form, Our representative will call you shortly.</h3>
+                <a [routerLink]="['/questionnaire']" class="btn waves-effect waves-light btn-primary">Close</a>
             </div>
         </div>
     </section>
