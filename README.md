@@ -17,7 +17,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 
 
------------ Project Functionality- CODE COVARAGE --------
+----------- Project Functionality - CODE COVARAGE --------
+
+RUN 'ng serve' and go to browser and navigate to http://localhost:4200
+
 
 1. Home page with Button to enter into Questionnaire Component.
 2. Home page cotaines SVG Image Logo.
