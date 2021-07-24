@@ -1,13 +1,11 @@
 <ng-container *ngIf="!showSubmissionMsg">
-
     <ng-container *ngFor="let question of questionnaireObj?.questionnaire?.questions;let i = index">
         <section class="bg">
             <div class="art">
                 <img src="../../assets/img/bg.svg" alt="">
             </div>
-
             <div class="q-section" id="{{'question-' + question?.identifier}}"
-                *ngIf="question?.question_type == 'multiple-choice' && showQuestion == question?.identifier">
+                *ngIf="showQuestion == question?.identifier">
                 <div class="container" [@inOutAnimation]>
                     <div class="d-flex align-items-center h-100vh">
                         <div>
@@ -17,39 +15,28 @@
                                 {{question?.description}}
                             </span>
 
-                            <p class="answer-option" *ngFor="let options of question.choices">
-                                <mat-checkbox color="primary" [checked]="options.selected" [(ngModel)]="options.value"
-                                    (change)="updateAllSelected(question,options.value,question.multiple)"
-                                    value="{{options.value}}">
-                                    {{options.label}}
-                                </mat-checkbox>
-                            </p>
-
-                            <button class="btn waves-effect waves-light btn-primary"
-                                (click)="submitAnswer(i,question,questionnaireObj?.questionnaire?.questions[i + 1]?.identifier)"
-                                name="action"> Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="q-section" id="{{'question-' + question.identifier}}"
-                *ngIf="question.question_type == 'text' && showQuestion == question?.identifier">
-                <div class="container" [@inOutAnimation]>
-                    <div class="d-flex align-items-center h-100vh">
-                        <div>
-                            <h3> {{i + 1}}) {{question?.headline}} </h3>
-                            <span *ngIf="question?.description">
-                                {{question?.description}}
-                            </span>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <mat-label></mat-label>
-                                    <input placeholder="Enter your answer" value="{{question.value}}"
-                                        id="{{question?.identifier}}">
+                            <ng-container [ngSwitch]="question.question_type">
+                                <div *ngSwitchCase="'multiple-choice'">
+                                    <p class="answer-option" *ngFor="let options of question.choices">
+                                        <mat-checkbox color="primary" [checked]="options.selected"
+                                            [(ngModel)]="options.value"
+                                            (change)="updateAllSelected(question,options.value,question.multiple)"
+                                            value="{{options.value}}">
+                                            {{options.label}}
+                                        </mat-checkbox>
+                                    </p>
                                 </div>
-                            </div>
+                                <div *ngSwitchCase="'text'">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <mat-label></mat-label>
+                                            <input placeholder="Enter your answer" value="{{question.value}}"
+                                                id="{{question?.identifier}}" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
                             <button class="btn waves-effect waves-light btn-primary"
                                 (click)="submitAnswer(i,question,questionnaireObj?.questionnaire?.questions[i + 1]?.identifier)"
                                 name="action"> Submit
@@ -58,14 +45,12 @@
                     </div>
                 </div>
             </div>
-
         </section>
-
 
         <footer *ngIf="showQuestion == question?.identifier">
             <div class="d-flex justify-contnet-end">
                 <a *ngIf="i != 0"
-                    (click)="showPrevNextQuestion(questionnaireObj?.questionnaire?.questions[i - 1]?.identifier)"><i
+                    (click)="submitAnswer(i,question,questionnaireObj?.questionnaire?.questions[i - 1]?.identifier, true)"><i
                         class="zmdi zmdi-chevron-up"></i></a>
                 <a *ngIf="i != questionnaireObj?.questionnaire?.questions.length - 1"
                     (click)="submitAnswer(i,question,questionnaireObj?.questionnaire?.questions[i + 1]?.identifier)"><i
@@ -82,7 +67,7 @@
         <div class="alert">
             <div class="text-center">
                 <i class="zmdi zmdi-check"></i>
-                <h3> Hey There! Thank you for filing out this form, Our representative will call you shortly.</h3>
+                <h3>{{thank_you_msg}}</h3>
                 <a [routerLink]="['/questionnaire']" class="btn waves-effect waves-light btn-primary">Close</a>
             </div>
         </div>

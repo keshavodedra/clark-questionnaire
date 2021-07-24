@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from 'src/shared/config-service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -30,23 +31,34 @@ import { trigger, style, animate, transition } from '@angular/animations';
 })
 export class QuestionnaireListComponent implements OnInit {
 
+  private subscriptions: Subscription[] = [];
   questionnaireObj: any;
   showQuestion;
   showSubmissionMsg: boolean = false;
+  thank_you_msg: string = 'Hey There! Thank you for filing out this form, Our representative will call you shortly.'
 
-  constructor() {
-    this.questionnaireObj = ConfigService.getQuestionList();
-    this.showQuestion = this.questionnaireObj?.questionnaire?.questions[0].identifier;
-  }
+  constructor() { }
 
   ngOnInit(): void {
+    this.getQuestions();
   }
 
-  submitAnswer(index, question, next) {
-    let isValid = false;
-    isValid = this.checkValidation(question)
+  getQuestions() {
+    const sub = ConfigService.getQuestionList()
+      .subscribe(response => {
+        if (response) {
+          this.questionnaireObj = {... response};
+          this.showQuestion = this.questionnaireObj?.questionnaire?.questions[0].identifier;
+        }
+      });
+    this.subscriptions.push(sub);
+  }
 
-    if (index + 1 != this.questionnaireObj?.questionnaire?.questions.length) {
+  submitAnswer(index, question, next, byPassValidation = false) {
+    let isValid = false;
+    isValid = this.checkValidation(question, byPassValidation)
+
+    if (index + 1 != this.questionnaireObj?.questionnaire?.questions.length || byPassValidation) {
       if (isValid) {
         this.showPrevNextQuestion(next);
       }
@@ -59,10 +71,14 @@ export class QuestionnaireListComponent implements OnInit {
     this.showQuestion = next;
   }
 
-  checkValidation(question) {
+
+  checkValidation(question, byPassValidation) {
     if (question.question_type == 'text') {
       let txtVal = (<HTMLInputElement>document.getElementById(question.identifier)).value
       this.questionnaireObj.questionnaire.questions.find(que => que.identifier == question.identifier).value = txtVal;
+      if (byPassValidation) {
+        return true;
+      }
       return this.checkIsValid(txtVal.length, question);
     } else {
       return this.checkIsValid(question.choices.filter(choice => choice.selected == true).length, question);
@@ -80,5 +96,9 @@ export class QuestionnaireListComponent implements OnInit {
   updateAllSelected(question, value, isMultiple) {
     if (isMultiple == 'false') { this.questionnaireObj.questionnaire.questions.find(que => que.identifier == question.identifier).choices.find(choice => choice.selected = false) };
     this.questionnaireObj.questionnaire.questions.find(que => que.identifier == question.identifier).choices.find(choice => choice.value == value).selected = true;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map(sub => sub.unsubscribe());
   }
 }
